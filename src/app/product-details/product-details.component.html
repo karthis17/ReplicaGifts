@@ -1,0 +1,88 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6">
+      <div><img [src]="data.thumbnail" class="w-100" alt="" srcset="" /></div>
+      <div class="d-flex">
+        <div *ngFor="let img of data.images">
+          <img [src]="img" height="300" width="300" alt="" srcset="" />
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <h2>{{ data.title }}</h2>
+      <p>{{ data.description }}</p>
+
+      <h3 class="my-3">
+        {{ data.amount }}
+        <span class="text-decoration-line-through"> {{ data.price }}</span> ({{
+          data.discount
+        }}% off)
+      </h3>
+    </div>
+  </div>
+  <div class="row">
+    <div *ngIf="data.userImage" class="mb-3 col-lg-12">
+      <label for="formFile" class="form-label">Upload Image</label>
+      <input
+        class="form-control"
+        type="file"
+        id="formFile"
+        (change)="addFile($event)"
+      />
+    </div>
+    <div class="col-md-6">
+      <label for="inputState" class="form-label">Select Print Type:</label>
+      <select
+        id="inputState"
+        class="form-select"
+        [(ngModel)]="frameDeatails.printType"
+      >
+        <option selected>Choose...</option>
+        <option
+          *ngFor="let print of data.availablePrintType"
+          [value]="print.categoryName"
+          class=""
+        >
+          {{ print.categoryName }}
+        </option>
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label for="inputState1" class="form-label">Select Size</label>
+      <select
+        id="inputState1"
+        class="form-select"
+        [(ngModel)]="frameDeatails.size"
+      >
+        <option selected>Choose...</option>
+        <option
+          *ngFor="let print of data.availablePrintSize"
+          [value]="+print.width + ' x ' + +print.height + ' inche'"
+          class=""
+        >
+          {{ print.width }} x {{ print.height }} inche
+        </option>
+      </select>
+    </div>
+    <div class="col-md-12">
+      <label for="inputCity" class="form-label">Quantity</label>
+      <input
+        type="number"
+        [max]="data.quantity - 1"
+        min="1"
+        class="form-control"
+        id="inputCity"
+        [(ngModel)]="frameDeatails.quantity"
+      />
+    </div>
+    <button (click)="addCart(data._id)">Add to cart</button>
+  </div>
+
+  <table>
+    <tr *ngFor="let info of data.additionalInfo">
+      <td>{{ info.title }}</td>
+      <td>{{ info.description }}</td>
+    </tr>
+  </table>
+</div>

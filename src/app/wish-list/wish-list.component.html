@@ -1,0 +1,30 @@
+<div class="container">
+  <table>
+    <thead>
+      <th>IMAGE</th>
+      <th>NAME</th>
+      <th>PRICE</th>
+      <th>STOCK STATUS</th>
+      <th>ACTION</th>
+      <th>RENAME</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let w of wishList">
+        <td><img [src]="w.thumbnail" width="200" height="200" /></td>
+        <td>{{ w.title }}</td>
+        <td>{{ w.amount }}</td>
+        <td>{{ w.quantity > 0 ? "InStock" : "Out of Stock" }}</td>
+        <td>
+          <button (click)="navToProduct(w._id)" class="btn btn-primary">
+            Add to Cart
+          </button>
+        </td>
+        <td>
+          <button (click)="removeWish(w._id)" class="btn btn-danger">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

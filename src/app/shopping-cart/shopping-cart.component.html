@@ -1,0 +1,31 @@
+<div class="container">
+  <table>
+    <thead>
+      <th>IMAGE</th>
+      <th>NAME</th>
+      <th>PRICE</th>
+      <th>QUANTITY</th>
+      <th>SUB TOTAL</th>
+
+      <th>RENAME</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let w of cartList">
+        <td><img [src]="w.productId.thumbnail" width="200" height="200" /></td>
+        <td>{{ w.productId.title }}</td>
+        <td>{{ w.productId.amount }}</td>
+        <td>{{ w.quantity }}</td>
+        <td>
+          {{ w.total }}
+        </td>
+        <td>
+          <button (click)="remove(w._id)" class="btn btn-danger">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>
+    Total: <span class="fw-bold">{{ total }}</span>
+  </h2>
+</div>
