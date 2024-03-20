@@ -41,5 +41,11 @@ export class ShoppingCartComponent {
 
   navToProduct(id: any) {
     this.router.navigateByUrl(`/product?id=${id}`)
+
   }
+
+  checkout() {
+    this.router.navigate(['/check-out'])
+  }
+
 }

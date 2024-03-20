@@ -139,7 +139,7 @@
   <strong>Available Size</strong>
   <div class="">
     <div
-      *ngFor="let info of data.availableSize; let i = index"
+      *ngFor="let info of data.availablePrintSize; let i = index"
       class="d-flex justify-content-between gap-4"
     >
       <div class="form-group w-100">
@@ -149,7 +149,7 @@
           class="form-control"
           id="width{{ i }}"
           placeholder="Placeholder"
-          [(ngModel)]="data.availableSize[i].width"
+          [(ngModel)]="data.availablePrintSize[i].width"
         />
       </div>
 
@@ -160,13 +160,13 @@
           class="form-control"
           id="height{{ i }}"
           placeholder="Placeholder"
-          [(ngModel)]="data.availableSize[i].height"
+          [(ngModel)]="data.availablePrintSize[i].height"
         />
       </div>
     </div>
     <button
       class="btn btn-primary w-100 my-3"
-      (click)="data.availableSize.push({ width: 0, height: 1 })"
+      (click)="data.availablePrintSize.push({ width: 0, height: 1 })"
     >
       Add Size
     </button>

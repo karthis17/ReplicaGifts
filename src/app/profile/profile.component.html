@@ -2,6 +2,117 @@
   <h1>Name: {{ user.username }}</h1>
   <p>Email : {{ user.email }}</p>
 
+  <p>Address:</p>
+
+  <div class="row" *ngIf="!user.billingDetails.address || edit">
+    <div class="col-md-6">
+      <label for="namee" class="form-label">Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="namee"
+        [(ngModel)]="billingDetails.name"
+      />
+    </div>
+    <div class="col-md-6">
+      <label for="email" class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        [(ngModel)]="billingDetails.email"
+      />
+    </div>
+    <div class="col-md-6">
+      <label for="city" class="form-label">City</label>
+      <input
+        type="text"
+        class="form-control"
+        id="city"
+        [(ngModel)]="billingDetails.city"
+      />
+    </div>
+    <div class="col-md-6">
+      <label for="country" class="form-label">Country</label>
+      <input
+        type="country"
+        class="form-control"
+        id="country"
+        [(ngModel)]="billingDetails.country"
+      />
+    </div>
+    <div class="col-md-12">
+      <label for="country" class="form-label">Address</label>
+      <input
+        type="address"
+        class="form-control"
+        id="address"
+        [(ngModel)]="billingDetails.address"
+      />
+    </div>
+
+    <div class="col-md-6">
+      <label for="city" class="form-label">Postcode</label>
+      <input
+        type="text"
+        class="form-control"
+        id="postcode"
+        [(ngModel)]="billingDetails.postcode"
+      />
+    </div>
+    <div class="col-md-6">
+      <label for="country" class="form-label">Phone</label>
+      <input
+        type="phone"
+        class="form-control"
+        id="phone"
+        [(ngModel)]="billingDetails.phone"
+      />
+    </div>
+
+    <button class="btn btn-primary" (click)="addAddress()">Add adress</button>
+  </div>
+
+  <ng-container *ngIf="user.billingDetails.address && !edit">
+    <table>
+      <tr>
+        <th>name</th>
+        <td>{{ user.billingDetails.name }}</td>
+      </tr>
+      <tr>
+        <th>email</th>
+        <td>{{ user.billingDetails.email }}</td>
+      </tr>
+      <tr>
+        <th>address</th>
+        <td>{{ user.billingDetails.address }}</td>
+      </tr>
+      <tr>
+        <th>city</th>
+        <td>{{ user.billingDetails.city }}</td>
+      </tr>
+      <tr>
+        <th>country</th>
+        <td>{{ user.billingDetails.country }}</td>
+      </tr>
+      <tr>
+        <th>postcode</th>
+        <td>{{ user.billingDetails.postcode }}</td>
+      </tr>
+      <tr>
+        <th>phone</th>
+        <td>{{ user.billingDetails.phone }}</td>
+      </tr>
+    </table>
+
+    <button
+      class="btn btn-link"
+      (click)="edit = true; billingDetails = user.billingDetails"
+    >
+      Edit
+    </button>
+  </ng-container>
+
   <h1>Order</h1>
   <table>
     <thead>

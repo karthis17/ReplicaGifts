@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Product } from '../model/product.model';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ export class CartService {
   constructor(private http: HttpClient) { }
 
 
-  addToCart(id: any, quantity: any) {
+  addToCart(id: any, quantity: any, frameId: any) {
 
     console.log(quantity)
 
@@ -19,7 +20,7 @@ export class CartService {
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
 
 
-    return this.http.post("http://localhost:3000/api/carts/add-cart/" + id, { quantity }, _options)
+    return this.http.post("http://localhost:3000/api/carts/add-cart/" + id, { quantity, frameId }, _options)
 
   }
 
@@ -38,6 +39,29 @@ export class CartService {
 
     return this.http.post("http://localhost:3000/api/frame/add-frame", formData, _options)
 
+  }
+
+  getFrame(id: any) {
+    const token: string | null = localStorage.getItem('user');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
+
+
+    return this.http.get<any>("http://localhost:3000/api/frame/get/" + id, _options)
+  }
+  frameData(id: any) {
+    const token: string | null = localStorage.getItem('user');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
+
+
+    return this.http.get<any>("http://localhost:3000/api/frame/get-frame/" + id, _options)
+  }
+
+  getAllFrames() {
+    const token: string | null = sessionStorage.getItem('admin');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
+
+
+    return this.http.get<any>("http://localhost:3000/api/frame/orders", _options)
   }
 
   getCart() {

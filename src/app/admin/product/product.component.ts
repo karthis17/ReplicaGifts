@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from '../../service/product.service';
 import { CategoryService } from '../../service/category.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Product } from '../../model/product.model';
 
 @Component({
   selector: 'app-product',
@@ -13,8 +15,8 @@ import { CategoryService } from '../../service/category.service';
 })
 export class ProductComponent {
 
-  constructor(private product: ProductService, private category: CategoryService) { }
-  data = {
+  constructor(private product: ProductService, private category: CategoryService, private route: ActivatedRoute, private router: Router) { }
+  data: Product = {
 
     title: '',
     description: '',
@@ -30,12 +32,12 @@ export class ProductComponent {
     }],
     quantity: 1,
 
-    availableSize: [{
+    availablePrintSize: [{
       width: 0,
       height: 1
     }],
 
-    availablePrintType: [""]
+    availablePrintType: []
   }
 
 
@@ -43,11 +45,30 @@ export class ProductComponent {
   categories: any[] = [];
 
   ngOnInit() {
+
     this.category.getCategory().subscribe((data: any) => { this.categories = data; console.log(data) });
-    this.getAll()
+    this.route.queryParams.subscribe(params => {
+      this.showUpdate = params['edit'];
+      console.log(params['edit']);
+
+      if (this.showUpdate) {
+        this.product.getProduct(this.showUpdate).subscribe(product => {
+          console.log(product);
+          this.data = product
+          this.idToUpdate = product._id
+          this.data.availablePrintType = product.availablePrintType.map(p => p._id)
+        })
+
+      } else {
+        this.getAll()
+      }
+
+    });
+
+
   }
 
-  showUpdate: boolean = false;
+  showUpdate: any = false;
 
   products: any[] = [];
 
@@ -81,14 +102,7 @@ export class ProductComponent {
 
 
   idToUpdate: any;
-  edit(id: any) {
-    this.data = id;
-    this.idToUpdate = id._id;
-    this.data.availableSize = id.availablePrintSize;
-    id.availablePrintType.map((type: any, i: any) => { this.data.availablePrintType[i] = type._id });
-    this.showUpdate = true;
 
-  }
 
 
   update() {
@@ -98,7 +112,7 @@ export class ProductComponent {
   }
 
   close() {
-    location.reload();
+    this.router.navigate(['admin']);
   }
 
   submit() {

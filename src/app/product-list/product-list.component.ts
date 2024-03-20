@@ -30,12 +30,17 @@ export class ProductListComponent {
 
   nav(id: any) {
 
-    this.router.navigateByUrl(`/product?id=${id}`)
+    this.router.navigateByUrl(`/product/${id}`)
   }
 
   addWish(id: any) {
 
     this.wish.addWish(id).subscribe((wish: any) => { console.log(wish) });
+
+  }
+
+  navToCategory(id: any) {
+    this.router.navigateByUrl(`/papular-category/${id}`)
 
   }
 

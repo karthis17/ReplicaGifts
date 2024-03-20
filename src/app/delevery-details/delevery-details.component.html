@@ -1,1 +1,112 @@
-<p>delevery-details works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <label for="namee" class="form-label">Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="namee"
+        [(ngModel)]="billingDetails.name"
+      />
+    </div>
+    <div class="col-md-6">
+      <label for="email" class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        [(ngModel)]="billingDetails.email"
+      />
+    </div>
+    <div class="col-md-6">
+      <label for="city" class="form-label">City</label>
+      <input
+        type="text"
+        class="form-control"
+        id="city"
+        [(ngModel)]="billingDetails.city"
+      />
+    </div>
+    <div class="col-md-6">
+      <label for="country" class="form-label">Country</label>
+      <input
+        type="country"
+        class="form-control"
+        id="country"
+        [(ngModel)]="billingDetails.country"
+      />
+    </div>
+    <div class="col-md-12">
+      <label for="country" class="form-label">Address</label>
+      <input
+        type="address"
+        class="form-control"
+        id="address"
+        [(ngModel)]="billingDetails.address"
+      />
+    </div>
+
+    <div class="col-md-6">
+      <label for="city" class="form-label">Postcode</label>
+      <input
+        type="text"
+        class="form-control"
+        id="postcode"
+        [(ngModel)]="billingDetails.postcode"
+      />
+    </div>
+    <div class="col-md-6">
+      <label for="country" class="form-label">Phone</label>
+      <input
+        type="phone"
+        class="form-control"
+        id="phone"
+        [(ngModel)]="billingDetails.phone"
+      />
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <th colspan="2">PRODUCT</th>
+      <th>TOTAL</th>
+    </thead>
+    <tbody>
+      <tr *ngIf="product">
+        <td>
+          <img
+            [src]="product.thumbnail"
+            width="100"
+            height="100"
+            alt=""
+            srcset=""
+          />
+        </td>
+        <td>{{ product.title }} x {{ quantity }}</td>
+        <td>{{ totalPrice }}</td>
+      </tr>
+      <tr *ngIf="shoppingCart">
+        <ng-container *ngFor="let prod of shoppingCart">
+          <td>
+            <img
+              [src]="prod.productId.thumbnail"
+              width="100"
+              height="100"
+              alt=""
+              srcset=""
+            />
+          </td>
+          <td>{{ prod.productId.title }} x {{ prod.quantity }}</td>
+          <td>{{ prod.total }}</td>
+        </ng-container>
+      </tr>
+    </tbody>
+    <tfoot>
+      <th>TOTAL</th>
+      <td>
+        {{ totalPrice }}
+      </td>
+    </tfoot>
+  </table>
+  <button (click)="checkout()" class="btn btn-warning">Checkout</button>
+</div>

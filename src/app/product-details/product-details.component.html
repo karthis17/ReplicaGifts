@@ -76,7 +76,10 @@
         [(ngModel)]="frameDeatails.quantity"
       />
     </div>
-    <button (click)="addCart(data._id)">Add to cart</button>
+    <button (click)="addCart(data._id)" class="my-3 btn btn-primary">
+      Add to cart
+    </button>
+    <button (click)="buyNow(data._id)" class="btn btn-success">Buy Now</button>
   </div>
 
   <table>
