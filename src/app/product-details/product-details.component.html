@@ -82,10 +82,53 @@
     <button (click)="buyNow(data._id)" class="btn btn-success">Buy Now</button>
   </div>
 
-  <table>
+  <table class="table">
     <tr *ngFor="let info of data.additionalInfo">
       <td>{{ info.title }}</td>
       <td>{{ info.description }}</td>
     </tr>
   </table>
+
+  <strong>Review</strong>
+
+  <ng-container class="mx-5" *ngIf="new_review">
+    <div class="d-flex align-items-top">
+      <span class="avatar">{{ new_review.charAt(0).toUpperCase() }}</span>
+      <p class="mt-2">
+        {{ new_review }}
+        <app-star-rating (user_rating)="getrating($event)"></app-star-rating>
+      </p>
+    </div>
+    <div class="position-relative mt-0 mx-lg-5">
+      <input
+        type="text"
+        class="form-control pe-5"
+        placeholder="Write Your Review.."
+        name="review"
+        [formControl]="comment"
+      />
+      <i
+        class="bi bi-send-plus-fill text-success absolute"
+        (click)="addrating()"
+      ></i>
+    </div>
+  </ng-container>
+  <ng-container *ngFor="let review of data.reviews">
+    <div class="d-flex align-items-top my-4">
+      <span class="avatar">{{
+        review.user.username.charAt(0).toUpperCase()
+      }}</span>
+      <div class="content pt-2">
+        <p class="m-0 p-0 fw-medium">{{ review.user.username }}</p>
+        <app-star-rating
+          [readonly]="true"
+          [rating]="review.rating"
+        ></app-star-rating>
+        <p class="m-0 p-0">
+          {{ review.comment }}
+        </p>
+      </div>
+    </div>
+    <hr *ngIf="reviews.length > 1" />
+  </ng-container>
 </div>

@@ -1,16 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, SimpleChanges } from '@angular/core';
 import { ProductService } from '../service/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../model/product.model';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CartService } from '../service/cart.service';
 import { Subject, takeUntil } from 'rxjs';
+import { StarRatingComponent } from '../star-rating/star-rating.component';
 
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, StarRatingComponent, ReactiveFormsModule],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css'
 })
@@ -19,6 +20,33 @@ export class ProductDetailsComponent {
   constructor(public productService: ProductService, private route: ActivatedRoute, private cart: CartService, private router: Router) { }
   private unsubscribe$: Subject<void> = new Subject<void>();
   productId: any;
+
+
+
+  new_review: string = "karthi";
+
+  rating!: number;
+  reviews!: any;
+  comment = new FormControl('', Validators.required)
+
+
+
+  getrating(rating: number) {
+    this.rating = rating;
+  }
+
+  addrating() {
+
+    if (this.comment.valid && this.comment.value) {
+      this.productService.addreview(this.data._id, this.comment.value, this.rating).subscribe((review: any) => {
+        this.data = review;
+      });
+    }
+  }
+
+
+
+
 
   data: Product = {
     title: '',
@@ -31,10 +59,12 @@ export class ProductDetailsComponent {
     additionalInfo: [] as any,
     quantity: 0,
     availablePrintSize: [] as any,
-    availablePrintType: []
+    availablePrintType: [],
+    reviews: [] as any,
   };
 
   ngOnInit(): void {
+    this.rating = 0;
     this.route.params.pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe(params => {
@@ -70,7 +100,12 @@ export class ProductDetailsComponent {
       this.cart.addFrame(this.frameDeatails, id).subscribe((dat: any) => {
         console.log(dat);
         this.cart.addToCart(id, this.frameDeatails.quantity, dat._id).subscribe(dat => { console.log(dat) });
-
+        this.frameDeatails = {
+          userImage: '',
+          printType: '',
+          size: '',
+          quantity: 1,
+        };
       });
     }
 

@@ -4,7 +4,7 @@
 
   <p>Address:</p>
 
-  <div class="row" *ngIf="!user.billingDetails.address || edit">
+  <div class="row" *ngIf="!user?.billingDetails || edit">
     <div class="col-md-6">
       <label for="namee" class="form-label">Name</label>
       <input
@@ -33,6 +33,15 @@
       />
     </div>
     <div class="col-md-6">
+      <label for="state" class="form-label">State</label>
+      <input
+        type="text"
+        class="form-control"
+        id="state"
+        [(ngModel)]="billingDetails.state"
+      />
+    </div>
+    <div class="col-md-12">
       <label for="country" class="form-label">Country</label>
       <input
         type="country"
@@ -73,7 +82,7 @@
     <button class="btn btn-primary" (click)="addAddress()">Add adress</button>
   </div>
 
-  <ng-container *ngIf="user.billingDetails.address && !edit">
+  <ng-container *ngIf="user?.billingDetails?.address && !edit">
     <table>
       <tr>
         <th>name</th>
@@ -90,6 +99,10 @@
       <tr>
         <th>city</th>
         <td>{{ user.billingDetails.city }}</td>
+      </tr>
+      <tr>
+        <th>state</th>
+        <td>{{ user.billingDetails.state }}</td>
       </tr>
       <tr>
         <th>country</th>
@@ -116,11 +129,31 @@
   <h1>Order</h1>
   <table>
     <thead>
-      <th>ORDERS</th>
+      <th colspan="2">PRODUCT</th>
       <th>DATE</th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>ORDER ID</th>
+      <th>PAYMENT STATUS</th>
+      <th>DELIVERY STATUS</th>
+      <th>ACTION</th>
     </thead>
+    <tbody>
+      <tr *ngFor="let order of orders">
+        <td>
+          <img
+            [src]="order.product.thumbnail"
+            alt=""
+            width="100"
+            height="100"
+          />
+        </td>
+        <td>{{ order.product.title }}</td>
+        <td>{{ order.chreatedAt | date }}</td>
+        <td>{{ order.orderId ?? "-" }}</td>
+        <td>{{ order.status }}</td>
+        <td>{{ order.deliveryStatus ?? "-" }}</td>
+      </tr>
+    </tbody>
   </table>
 </div>
+
+<button class="btn btn-danger" (click)="logout()">Logout</button>

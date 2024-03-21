@@ -35,6 +35,10 @@
             </div>
             <div class="card-text mt-3">
               <p (click)="nav(cate._id)" class="fw-bold">{{ cate.title }}</p>
+              <app-star-rating
+                [rating]="cate.totalrating"
+                [readonly]="true"
+              ></app-star-rating>
               <p>
                 {{ cate.amount }}
                 <span class="text-decoration-line-through"
@@ -65,6 +69,10 @@
             </div>
             <div class="card-text mt-3">
               <p class="fw-bold">{{ cate.title }}</p>
+              <app-star-rating
+                [rating]="cate.totalrating"
+                [readonly]="true"
+              ></app-star-rating>
               <p>
                 {{ cate.amount }}
                 <span class="text-decoration-line-through"

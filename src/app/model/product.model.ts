@@ -20,7 +20,9 @@ export class Product {
         height: 1
     }];
 
+    totalrating?: number;
+
     availablePrintType!: any[];
     amount?: number;
-
+    reviews?: [{ rating: number, user: any, comment: string }]
 }

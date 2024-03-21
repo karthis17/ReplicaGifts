@@ -7,11 +7,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { WishService } from '../service/wish.service';
 import { Product } from '../model/product.model';
 import { Subject, takeUntil } from 'rxjs';
+import { StarRatingComponent } from '../star-rating/star-rating.component';
 
 @Component({
   selector: 'app-category',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, StarRatingComponent],
   templateUrl: './category.component.html',
   styleUrl: './category.component.css'
 })
@@ -22,6 +23,8 @@ export class CategoryComponent {
   categories: any[] = [];
 
   products: Product[] = [];
+
+  upperLimits: number[] = [];
 
   categoryId: any;
   ngOnInit() {
@@ -54,4 +57,22 @@ export class CategoryComponent {
     this.wish.addWish(id).subscribe((wish: any) => { console.log(wish) });
 
   }
+
+  calculateUpperLimit(prices: number[]) {
+    const uniquePricesSet = new Set<number>();
+    uniquePricesSet.add(prices[0]);
+
+    let j = prices[0] + 1000;
+    for (let i = 1; i <= prices.length; i++) {
+      if (prices[i] > j) {
+        j = prices[i] + 1000;
+      } else {
+        uniquePricesSet.add(j);
+      }
+    }
+
+    this.upperLimits = Array.from(uniquePricesSet);
+  }
+
+
 }

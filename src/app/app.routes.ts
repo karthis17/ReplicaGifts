@@ -17,6 +17,7 @@ import { DeleveryDetailsComponent } from './delevery-details/delevery-details.co
 import { ProductViewComponent } from './admin/product-view/product-view.component';
 import { OrdersComponent } from './admin/orders/orders.component';
 import { OrderViewComponent } from './admin/order-view/order-view.component';
+import { ShopeComponent } from './shope/shope.component';
 
 export const routes: Routes = [
     {
@@ -39,6 +40,7 @@ export const routes: Routes = [
     { path: 'cart', component: ShoppingCartComponent, canActivate: [UserAuthGuard] },
     { path: 'wish', component: WishListComponent, canActivate: [UserAuthGuard] },
     { path: 'papular-category/:id', component: Category },
+    { path: 'shop', component: ShopeComponent },
     { path: 'buy-now/:id', component: DeleveryDetailsComponent, canActivate: [UserAuthGuard] },
     { path: 'check-out', component: DeleveryDetailsComponent, canActivate: [UserAuthGuard] },
 ];

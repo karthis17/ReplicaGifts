@@ -1,19 +1,20 @@
 import { Component } from '@angular/core';
 import { UserAuthService } from '../service/user-auth.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProfileService } from '../service/profile.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, DatePipe],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent {
 
-  constructor(private userService: UserAuthService, private profile: ProfileService) { }
+  constructor(private userService: UserAuthService, private profile: ProfileService, private auth: UserAuthService, private router: Router) { }
 
   user: any;
 
@@ -29,7 +30,8 @@ export class ProfileComponent {
     country: '',
     address: '',
     postcode: '',
-    phone: ''
+    phone: '',
+    state: ''
   }
 
   ngOnInit() {
@@ -43,6 +45,7 @@ export class ProfileComponent {
       this.address = user.address
 
       this.user = user;
+      this.getOrders()
 
     })
   }
@@ -52,6 +55,20 @@ export class ProfileComponent {
       this.get()
       console.log(response);
     });
+  }
+
+  getOrders() {
+    this.profile.getOrder().subscribe((response: any) => {
+      this.orders = response;
+      console.log(response);
+    });
+  }
+
+  logout() {
+    this.auth.logOut();
+    console.log("sd")
+    this.router.navigate(['/']);
+
   }
 
 }

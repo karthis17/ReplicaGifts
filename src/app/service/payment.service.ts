@@ -39,7 +39,7 @@ export class PaymentService {
   }
 
   verifySignature(orderId: any, paymentId: any, signature: any, frameIds: any) {
-    console.log(frameIds)
+    console.log(frameIds, orderId)
     const token: string | null = localStorage.getItem('user');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
 

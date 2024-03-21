@@ -12,6 +12,10 @@
           </div>
           <div class="card-text mt-3">
             <p (click)="nav(cate._id)" class="fw-bold">{{ cate.title }}</p>
+            <app-star-rating
+              [rating]="cate.totalrating ?? 0"
+              [readonly]="true"
+            ></app-star-rating>
             <p>
               {{ cate.amount }}
               <span class="text-decoration-line-through"

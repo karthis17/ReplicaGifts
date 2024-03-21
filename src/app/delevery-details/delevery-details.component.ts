@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Product } from '../model/product.model';
 import { ActivatedRoute, Router, createUrlTreeFromSnapshot } from '@angular/router';
 import { ProductService } from '../service/product.service';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil, window } from 'rxjs';
 import { CartService } from '../service/cart.service';
 import { CommonModule } from '@angular/common';
 import { PaymentService } from '../service/payment.service';
@@ -28,7 +28,8 @@ export class DeleveryDetailsComponent {
     country: '',
     address: '',
     postcode: '',
-    phone: ''
+    phone: '',
+    state: ''
   }
 
 
@@ -59,7 +60,9 @@ export class DeleveryDetailsComponent {
 
             this.product = res.product;
             this.quantity = res.quantity;
-            this.totalPrice = this.product.amount ?? 0 * this.quantity;
+
+
+            this.totalPrice = Number.parseInt(res.product.amount) * Number.parseInt(res.quantity);
             console.log(this.product);
           } else {
             this.router.navigate([''])
@@ -151,6 +154,7 @@ export class DeleveryDetailsComponent {
     this.payment.verifySignature(response.razorpay_order_id, response.razorpay_payment_id, response.razorpay_signature, paymentResponse.frameDetails).subscribe(payment => {
       console.log(payment);
       alert("Payment Succeeded" + response.order_id);
+      this.router.navigate(['/']);
     })
   }
 

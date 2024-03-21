@@ -126,4 +126,37 @@ export class ProductService {
 
   }
 
+
+  addreview(id: any, comment: any, rating: any) {
+
+
+    const token: string | null = localStorage.getItem('user');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
+
+    return this.http.post("http://localhost:3000/api/products/add-review/" + id, { comment, rating }, _options);
+
+  }
+
+
+
+  limitedProduct(query: any) {
+    // Create a shallow copy of the query object
+    let q = { ...query };
+
+    if (query.category) {
+      // Convert the category property to a comma-separated string
+      q.category = query.category.join(',');
+    }
+
+    // Make the HTTP request using the modified query object
+    return this.http.get("http://localhost:3000/api/products/filter", { params: q });
+  }
+
+
+
+
+  priceRange() {
+    return this.http.get<any[]>("http://localhost:3000/api/products/price-range");
+  }
+
 }

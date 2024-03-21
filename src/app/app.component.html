@@ -3,6 +3,7 @@
     <a class="navbar-brand">Navbar</a>
     <div>
       <button (click)="nav()" class="btn btn-primary">Home</button>
+      <button (click)="navShop()" class="btn btn-primary">Shop</button>
       <button (click)="navWish()" class="btn btn-primary">Wish</button>
       <button (click)="navCart()" class="btn btn-primary">Cart</button>
       <button *ngIf="!isAuth" (click)="navToLogin()" class="btn btn-link">

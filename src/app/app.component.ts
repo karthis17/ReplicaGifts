@@ -48,4 +48,8 @@ export class AppComponent {
     this.router.navigate([''])
   }
 
+
+  navShop() {
+    this.router.navigate(['/shop']);
+  }
 }

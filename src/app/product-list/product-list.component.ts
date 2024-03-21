@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { ProductService } from '../service/product.service';
 import { WishService } from '../service/wish.service';
+import { StarRatingComponent } from '../star-rating/star-rating.component';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, StarRatingComponent],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.css'
 })
@@ -40,7 +41,7 @@ export class ProductListComponent {
   }
 
   navToCategory(id: any) {
-    this.router.navigateByUrl(`/papular-category/${id}`)
+    this.router.navigateByUrl(`/shop?category=${id}`)
 
   }
 
