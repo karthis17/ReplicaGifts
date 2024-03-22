@@ -16,11 +16,10 @@ export class CategoryService {
     const formData = new FormData();
 
     formData.append("categoryName", data.categoryName);
-    formData.append("description", data.description);
 
     formData.append("thumbnail", data.thumbnail);
 
-    const token: string | null = localStorage.getItem('token');
+    const token: string | null = sessionStorage.getItem('admin');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
 
@@ -31,6 +30,52 @@ export class CategoryService {
 
   getCategory() {
     return this.http.get("http://localhost:3000/api/category/all")
+  }
+
+  getCategoryOnly() {
+    return this.http.get("http://localhost:3000/api/category/category-only")
+
+  }
+  getprintType() {
+    return this.http.get("http://localhost:3000/api/category/printType")
+
+  }
+
+  addPrintType(data: any) {
+    const formData = new FormData();
+
+    formData.append("categoryName", data.categoryName);
+
+    formData.append("thumbnail", data.thumbnail);
+
+    const token: string | null = sessionStorage.getItem('admin');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
+
+
+    return this.http.post("http://localhost:3000/api/category/printType", formData, _options)
+  }
+
+  update(data: any, id: any) {
+    const formData = new FormData();
+
+    formData.append("categoryName", data.categoryName);
+    console.log(data.categoryName);
+
+    formData.append("thumbnail", data.thumbnail);
+
+    const token: string | null = sessionStorage.getItem('admin');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
+
+
+    return this.http.put("http://localhost:3000/api/category/update/" + id, formData, _options)
+  }
+
+  delete(id: any) {
+    const token: string | null = sessionStorage.getItem('admin');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
+
+
+    return this.http.delete("http://localhost:3000/api/category/delete/" + id, _options)
   }
 
 }

@@ -20,6 +20,7 @@ export class ProductService {
     formData.append("title", data.title);
     formData.append("price", data.price);
     formData.append("userImage", data.userImage);
+    formData.append("category", data.category);
     formData.append("discount", data.discount);
     formData.append("description", data.description);
     formData.append("additionalInfo", JSON.stringify(data.additionalInfo));
@@ -30,11 +31,8 @@ export class ProductService {
       formData.append("availablePrintType", d);
     })
     formData.append("quantity", data.quantity);
-    formData.append("thumbnail", data.thumbnail);
+    formData.append("image", data.image)
 
-    data.images.forEach((element: any) => {
-      formData.append("images", element);
-    });
 
     const admin: string | null = sessionStorage.getItem('admin');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${admin ? JSON.parse(admin).token : ""}` }) };
@@ -57,6 +55,8 @@ export class ProductService {
     formData.append("price", data.price);
     formData.append("userImage", data.userImage);
     formData.append("discount", data.discount);
+    formData.append("category", data.category);
+
     formData.append("description", data.description);
     formData.append("additionalInfo", JSON.stringify(data.additionalInfo));
     formData.append("availablePrintSize", JSON.stringify(data.availablePrintSize));
@@ -66,16 +66,9 @@ export class ProductService {
       formData.append("availablePrintType", d);
     })
     formData.append("quantity", data.quantity);
-    formData.append("thumbnail", data.thumbnail);
 
-    data.images.forEach((element: any) => {
-      formData.append("images", element);
-      // if (typeof element !== "string") {
+    formData.append("image", data.image);
 
-      //   formData.append("new_image", element);
-      //   console.log(element)
-      // }
-    });
 
 
 

@@ -4,6 +4,26 @@
 
   <p>Print type: {{ data.printType }}</p>
   <p>User Image: {{ data.userImage }}</p>
+
+  <h2>gift:</h2>
+
+  <table class="table">
+    <thead>
+      <th>Thumbnail</th>
+      <th>Name</th>
+      <th>Quantity</th>
+      <th>Total</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let gift of data.gifts">
+        <td><img src="{{ gift.gift.thumbnail }}" alt="" srcset="" /></td>
+        <td>{{ gift.gift.name }}</td>
+        <td>{{ gift.quantity }}</td>
+        <td>{{ gift.gift.price * gift.quantity }}</td>
+      </tr>
+    </tbody>
+  </table>
+
   <button
     (click)="downloadImage(data.userImage, 'image.png')"
     class="btn btn-primary"

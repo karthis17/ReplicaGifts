@@ -1,0 +1,16 @@
+/* .canvas-container {
+  position: relative;
+  top: 0%;
+}
+
+.upper-canvas {
+  position: absolute;
+  top: 0;
+  z-index: 1;
+}
+
+.lower-canvas {
+  position: absolute;
+  top: 0;
+  z-index: 0;
+} */

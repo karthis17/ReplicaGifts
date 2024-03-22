@@ -15,36 +15,22 @@ export class DashboardComponent {
 
 
   dashboardOptions = [
-    { link: ['/admin', 'product-view'], name: 'Edit Product', icon: 'bi-pencil-square' },
-    { link: ['/admin', 'product-manipulate'], name: 'Add Product', icon: 'bi-plus-square' },
-    { link: ['/admin', 'category'], name: 'Category', icon: 'bi-plus-square' },
-    { link: ['/admin', 'orders'], name: 'Orders', icon: 'bi-cart-plus' },
-    { link: ['/admin', 'purchased-user'], name: 'Purchased User', icon: 'bi-person-check-fill' },
-    { link: ['/admin', 'product-view'], name: 'Out Of Stack Product', icon: 'bi-cart-dash' },
-    { link: ['/admin', 'purchased-user'], name: 'Returned Orders', icon: 'bi-arrow-return-left' },
+    { link: '/admin/product-view', name: 'Edit Product', icon: 'bi-pencil-square' },
+    { link: '/admin/product-manipulate', name: 'Add Product', icon: 'bi-plus-square' },
+    { link: '/admin/category', name: 'Category', icon: 'bi-plus-square' },
+    { link: '/admin/category?printType=true', name: 'Print Type', icon: 'bi-plus-square' },
+    { link: '/admin/orders', name: 'Orders', icon: 'bi-cart-plus' },
+    { link: '/admin/gifts', name: 'Gifts', icon: 'bi-cart-plus' },
+    { link: '/admin/purchased-user', name: 'Purchased User', icon: 'bi-person-check-fill' },
+    { link: '/admin/product-view?outOfStock=true', name: 'Out Of Stack Product', icon: 'bi-cart-dash' },
+    { link: '/admin/purchased-user?returned=true', name: 'Returned Orders', icon: 'bi-arrow-return-left' },
   ]
 
-  nav(link: string[], outOfStock = false, resturn = false) {
-    if (outOfStock) {
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          outOfStock: true
-        }
-      };
-      this.router.navigate(link, navigationExtras);
+  nav(link: string) {
 
-    } else if (resturn) {
-      const navigationExtra: NavigationExtras = {
-        queryParams: {
-          returned: true
-        }
-      };
-      this.router.navigate(link, navigationExtra);
-
-    }
-    else
-      this.router.navigate(link);
+    this.router.navigateByUrl(link);
   }
+
 
 
 }

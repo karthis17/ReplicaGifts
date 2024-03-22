@@ -24,7 +24,7 @@ export class CartService {
 
   }
 
-  addFrame(frameDeatails: any, id: any) {
+  addFrame(frameDeatails: any, gifts: any, id: any) {
     const formData = new FormData();
 
     formData.append('quantity', frameDeatails.quantity);
@@ -32,6 +32,9 @@ export class CartService {
     formData.append('userImage', frameDeatails.userImage);
     formData.append('size', frameDeatails.size);
     formData.append('product', id);
+
+
+    formData.append('gifts', JSON.stringify(gifts));
 
     const token: string | null = localStorage.getItem('user');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };

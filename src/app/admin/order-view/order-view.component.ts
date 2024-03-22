@@ -3,11 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 import { CartService } from '../../service/cart.service';
 import { Subject, takeUntil } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-order-view',
   standalone: true,
-  imports: [],
+  imports: [NgFor],
   templateUrl: './order-view.component.html',
   styleUrl: './order-view.component.css'
 })

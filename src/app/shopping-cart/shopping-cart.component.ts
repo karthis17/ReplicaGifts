@@ -30,7 +30,7 @@ export class ShoppingCartComponent {
       console.log(cart);
       this.cartList = cart;
       this.cartList.map((cart) => {
-        this.total = this.total + cart.total;
+        this.total = this.total + cart.userWant.totalAmount;
       })
     });
   }

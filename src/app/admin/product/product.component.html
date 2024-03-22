@@ -76,27 +76,24 @@
   <strong>Add Product images</strong>
 
   <div>
-    <div
-      *ngFor="let image of data.images; let i = index; trackBy: trackByFn"
-      class="my-3"
-    >
-      <img
-        *ngIf="showUpdate"
-        style="max-height: 200px"
-        [src]="data.images[i]"
-      />
+    <img *ngIf="showUpdate" style="max-height: 200px" [src]="data.image" />
 
-      <label for="image{{ i + 1 }}"> Image {{ i + 1 }} </label>
-      <input
-        type="file"
-        class="form-control-file w-100 mt-1"
-        id="image{{ i + 1 }}"
-        (change)="addImage($event, i)"
-      />
-    </div>
-    <button class="btn btn-primary w-100 my-3" (click)="data.images.push('')">
-      Add Image
-    </button>
+    <label for="image"> Image </label>
+    <input
+      type="file"
+      class="form-control-file w-100 mt-1"
+      id="image"
+      (change)="addThub($event)"
+    />
+  </div>
+
+  <div class="form-group my-3">
+    <label for="print">Enter Category</label>
+    <select class="form-control" id="print" [(ngModel)]="data.category">
+      <option *ngFor="let print of categories" [value]="print._id">
+        {{ print.categoryName }}
+      </option>
+    </select>
   </div>
 
   <strong>Additional Information</strong>
@@ -189,7 +186,7 @@
           id="printCategory{{ i }}"
           [(ngModel)]="data.availablePrintType[i]"
         >
-          <option *ngFor="let print of categories" [value]="print._id">
+          <option *ngFor="let print of printType" [value]="print._id">
             {{ print.categoryName }}
           </option>
         </select>
@@ -201,13 +198,6 @@
     >
       Add Print Type
     </button>
-  </div>
-
-  <strong>Upload Thumbnail</strong>
-
-  <div class="">
-    <img *ngIf="showUpdate" style="max-height: 200px" [src]="data.thumbnail" />
-    <input type="file" class="form-control-file" (change)="addThub($event)" />
   </div>
 
   <button

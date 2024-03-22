@@ -44,6 +44,7 @@ export class ShopeComponent {
       debounceTime(300) // Debounce input to avoid rapid API requests
     ).subscribe((filters: any) => {
       this.getFilteredProduct(filters);
+      console.log(filters);
     });
 
     this.route.queryParams.subscribe(params => {

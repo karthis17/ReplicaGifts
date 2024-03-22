@@ -4,10 +4,9 @@ export class Product {
     description!: string;
     price!: number;
     discount!: number;
-    thumbnail!: string;
     userImage!: boolean;
-    images!: Array<string>;
-
+    image!: string;
+    category!: string;
     additionalInfo!: [{
         title: '',
         description: ''

@@ -17,14 +17,13 @@ export class ProductComponent {
 
   constructor(private product: ProductService, private category: CategoryService, private route: ActivatedRoute, private router: Router) { }
   data: Product = {
-
     title: '',
     description: '',
     price: 0,
     discount: 0,
-    thumbnail: '',
+
     userImage: false,
-    images: [""],
+    image: "",
 
     additionalInfo: [{
       title: '',
@@ -37,16 +36,24 @@ export class ProductComponent {
       height: 1
     }],
 
-    availablePrintType: []
+    availablePrintType: [],
+    category: ''
   }
 
 
 
   categories: any[] = [];
+  printType: any[] = [];
 
   ngOnInit() {
 
-    this.category.getCategory().subscribe((data: any) => { this.categories = data; console.log(data) });
+    this.category.getCategory().subscribe((data: any) => {
+      this.categories = data;
+      this.printType = data.filter((c: any) => c.printType);
+      console.log(data)
+    });
+
+
     this.route.queryParams.subscribe(params => {
       this.showUpdate = params['edit'];
       console.log(params['edit']);
@@ -75,13 +82,10 @@ export class ProductComponent {
 
   addThub(e: any) {
     console.log(e);
-    this.data.thumbnail = e.target.files[0];
+    this.data.image = e.target.files[0];
   }
 
-  addImage(e: any, i: any) {
-    console.log(e);
-    this.data.images[i] = e.target.files[0];
-  }
+
 
 
   trackByFn(index: any, item: any) {

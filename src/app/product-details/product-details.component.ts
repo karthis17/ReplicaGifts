@@ -7,6 +7,7 @@ import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { CartService } from '../service/cart.service';
 import { Subject, takeUntil } from 'rxjs';
 import { StarRatingComponent } from '../star-rating/star-rating.component';
+import { GiftsService } from '../service/gifts.service';
 
 @Component({
   selector: 'app-product-details',
@@ -17,7 +18,7 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
 })
 export class ProductDetailsComponent {
 
-  constructor(public productService: ProductService, private route: ActivatedRoute, private cart: CartService, private router: Router) { }
+  constructor(public productService: ProductService, private route: ActivatedRoute, private cart: CartService, private router: Router, private giftservice: GiftsService) { }
   private unsubscribe$: Subject<void> = new Subject<void>();
   productId: any;
 
@@ -45,22 +46,36 @@ export class ProductDetailsComponent {
   }
 
 
+  gifts: any = [];
+
+  selectedGifts: { gift: string, quantity: number, total: Number }[] = [];
 
 
+  addGift(gift: any) {
+
+    this.selectedGifts.push({ gift: gift._id, quantity: gift.selected_quantity, total: gift.price * gift.selected_quantity })
+
+  }
+
+
+  removeGift(gift: any) {
+    this.selectedGifts.splice(this.selectedGifts.findIndex(f => f.gift.toString() === gift._id.toString()), 1)
+  }
 
   data: Product = {
     title: '',
     description: '',
     price: 0,
     discount: 0,
-    thumbnail: '',
+
     userImage: false,
-    images: [],
+    image: '',
     additionalInfo: [] as any,
     quantity: 0,
     availablePrintSize: [] as any,
     availablePrintType: [],
     reviews: [] as any,
+    category: ''
   };
 
   ngOnInit(): void {
@@ -75,12 +90,19 @@ export class ProductDetailsComponent {
           takeUntil(this.unsubscribe$)
         ).subscribe((res: Product) => {
           this.data = res;
+          this.giftservice.getGifts().subscribe((items: any) => {
+            this.gifts = items.map((item: any) => { item['selected_quantity'] = 1; return item });
+            console.log(this.gifts)
+          });
           console.log(this.data);
         });
       }
     });
   }
 
+  isGiftSelected(giftId: any): boolean {
+    return this.selectedGifts.some(g => g.gift.toString() === giftId.toString());
+  }
 
   frameDeatails = {
     userImage: '',
@@ -97,7 +119,7 @@ export class ProductDetailsComponent {
   addCart(id: any) {
 
     if (this.frameDeatails.printType !== '' && this.frameDeatails.size !== '') {
-      this.cart.addFrame(this.frameDeatails, id).subscribe((dat: any) => {
+      this.cart.addFrame(this.frameDeatails, this.selectedGifts, id).subscribe((dat: any) => {
         console.log(dat);
         this.cart.addToCart(id, this.frameDeatails.quantity, dat._id).subscribe(dat => { console.log(dat) });
         this.frameDeatails = {
@@ -115,7 +137,7 @@ export class ProductDetailsComponent {
   buyNow(id: any) {
     if (this.frameDeatails.printType !== '' && this.frameDeatails.size !== '') {
 
-      this.cart.addFrame(this.frameDeatails, id).subscribe((dat: any) => {
+      this.cart.addFrame(this.frameDeatails, this.selectedGifts, id).subscribe((dat: any) => {
         console.log(dat);
         this.router.navigateByUrl(`/buy-now/${dat._id}`);
       });

@@ -43,6 +43,8 @@ export class DeleveryDetailsComponent {
 
   detailId: any;
 
+  gifts: any[] = [];
+
   checkoutData: any;
 
   ngOnInit() {
@@ -60,9 +62,9 @@ export class DeleveryDetailsComponent {
 
             this.product = res.product;
             this.quantity = res.quantity;
+            this.gifts = res.gifts;
 
-
-            this.totalPrice = Number.parseInt(res.product.amount) * Number.parseInt(res.quantity);
+            this.totalPrice = res.total;
             console.log(this.product);
           } else {
             this.router.navigate([''])
@@ -72,7 +74,8 @@ export class DeleveryDetailsComponent {
         this.cart.getCart().subscribe(res => {
           this.shoppingCart = res;
           this.shoppingCart.map((cart: any) => {
-            this.totalPrice = this.totalPrice + cart.total;
+            this.totalPrice += cart.userWant.totalAmount;
+            this.gifts = cart.userWant.gifts;
           })
         });
       }

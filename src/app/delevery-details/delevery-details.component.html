@@ -84,31 +84,46 @@
       <tr *ngIf="product">
         <td>
           <img
-            [src]="product.thumbnail"
+            [src]="product.image"
             width="100"
             height="100"
             alt=""
             srcset=""
           />
         </td>
-        <td>{{ product.title }} x {{ quantity }}</td>
+        <td>
+          {{ product.title }} x {{ quantity }} +
+          <ul class="list-unstyled">
+            <li *ngFor="let gif of gifts">
+              {{ gif.gift.name }} x {{ gif.quantity }}
+            </li>
+          </ul>
+        </td>
         <td>{{ totalPrice }}</td>
       </tr>
-      <tr *ngIf="shoppingCart">
-        <ng-container *ngFor="let prod of shoppingCart">
+      <ng-container *ngFor="let prod of shoppingCart">
+        <tr *ngIf="shoppingCart">
           <td>
             <img
-              [src]="prod.productId.thumbnail"
+              [src]="prod.productId.image"
               width="100"
               height="100"
               alt=""
               srcset=""
             />
           </td>
-          <td>{{ prod.productId.title }} x {{ prod.quantity }}</td>
-          <td>{{ prod.total }}</td>
-        </ng-container>
-      </tr>
+          <td>
+            {{ prod.productId.title }} x {{ prod.quantity }}
+            +
+            <ul class="list-unstyled">
+              <li *ngFor="let gif of prod.userWant.gifts">
+                {{ gif.gift.name }} x {{ gif.quantity }}
+              </li>
+            </ul>
+          </td>
+          <td>{{ prod.userWant.totalAmount }}</td>
+        </tr>
+      </ng-container>
     </tbody>
     <tfoot>
       <th>TOTAL</th>

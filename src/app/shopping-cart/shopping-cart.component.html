@@ -5,18 +5,24 @@
       <th>NAME</th>
       <th>PRICE</th>
       <th>QUANTITY</th>
+      <th>gifts</th>
       <th>SUB TOTAL</th>
 
       <th>RENAME</th>
     </thead>
     <tbody>
       <tr *ngFor="let w of cartList">
-        <td><img [src]="w.productId.thumbnail" width="200" height="200" /></td>
+        <td><img [src]="w.productId.image" width="200" height="200" /></td>
         <td>{{ w.productId.title }}</td>
         <td>{{ w.productId.amount }}</td>
         <td>{{ w.quantity }}</td>
         <td>
-          {{ w.total }}
+          <p *ngFor="let gif of w.userWant.gifts">
+            {{ gif.gift.name }} x {{ gif.quantity }}
+          </p>
+        </td>
+        <td>
+          {{ w.userWant.totalAmount }}
         </td>
         <td>
           <button (click)="remove(w._id)" class="btn btn-danger">Delete</button>
