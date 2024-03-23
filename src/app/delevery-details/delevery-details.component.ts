@@ -95,10 +95,11 @@ export class DeleveryDetailsComponent {
   checkout() {
 
     if (this.detailId) {
-      this.checkoutData = { data: this.billingDetails, frameId: [this.detailId], name: 'Replica Gifts', amount: this.totalPrice, description: "Replica gifts" };
+      this.checkoutData = { data: this.billingDetails, frameId: [{ _id: this.detailId }], name: 'Replica Gifts', amount: this.totalPrice, description: "Replica gifts" };
 
     } else {
       this.checkoutData = { data: this.billingDetails, frameId: this.shoppingCart.map((cart: any) => cart.userWant), name: 'Replica Gifts', amount: this.totalPrice, description: "Replica gifts" }
+      console.log(this.checkoutData)
     }
 
 
@@ -153,11 +154,13 @@ export class DeleveryDetailsComponent {
     console.log("Payment succeeded");
     console.log(response);
 
+    console.log(paymentResponse)
+
     // Verify payment signature
     this.payment.verifySignature(response.razorpay_order_id, response.razorpay_payment_id, response.razorpay_signature, paymentResponse.frameDetails).subscribe(payment => {
       console.log(payment);
-      alert("Payment Succeeded" + response.order_id);
-      this.router.navigate(['/']);
+      alert("Payment Succeeded" + response.razorpay_order_id);
+      this.router.navigateByUrl('/');
     })
   }
 

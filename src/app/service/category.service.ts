@@ -41,6 +41,10 @@ export class CategoryService {
 
   }
 
+  getcategoryById(category: any) {
+    return this.http.get("http://localhost:3000/api/products/category/" + category);
+  }
+
   addPrintType(data: any) {
     const formData = new FormData();
 

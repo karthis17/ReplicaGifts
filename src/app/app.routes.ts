@@ -19,6 +19,7 @@ import { OrderViewComponent } from './admin/order-view/order-view.component';
 import { ShopeComponent } from './shope/shope.component';
 import { GiftsComponent } from './admin/gifts/gifts.component';
 import { FramesComponent } from './admin/frames/frames.component';
+import { RegisterComponent } from './register/register.component';
 
 export const routes: Routes = [
     {
@@ -39,6 +40,7 @@ export const routes: Routes = [
     { path: '', component: ProductListComponent },
     { path: 'product/:id', component: ProductDetailsComponent },
     { path: 'login', component: LoginComponent },
+    { path: 'register', component: RegisterComponent },
     { path: 'profile', component: ProfileComponent, canActivate: [UserAuthGuard] },
     { path: 'cart', component: ShoppingCartComponent, canActivate: [UserAuthGuard] },
     { path: 'wish', component: WishListComponent, canActivate: [UserAuthGuard] },

@@ -31,7 +31,7 @@ export class ShopeComponent {
 
   selectedSort: number = 0;
 
-  sort = [{ name: "Papularity", order: -1, q: "noOfPerchases" }, { name: "A to Z", order: 1, q: "title" }, { name: "Z to A", order: -1, q: "title" }, { name: "Price: low to high", order: 1, q: "amount" }, { name: "Price: high to low", order: -1, q: "amount" }, { name: "What's new", order: -1, q: "createdAt" }, { name: "Customer Rating", order: -1, q: "totalrating" }]
+  sort = [{ name: "Papularity", order: -1, q: "noOfPerchases" }, { name: "What's new", order: -1, q: "createdAt" }, { name: "Price: low to high", order: 1, q: "amount" }, { name: "Price: high to low", order: -1, q: "amount" }, { name: "A to Z", order: 1, q: "title" }, { name: "Z to A", order: -1, q: "title" }, { name: "Customer Rating", order: -1, q: "totalrating" }]
 
   private filterSubject = new BehaviorSubject<any>(this.selectedFilters);
 
@@ -83,7 +83,7 @@ export class ShopeComponent {
           break;
         }
 
-        let d = this.discounts[i - 1] * 10;
+        let d = this.discounts[i - 1] + 10;
         if (d < maxDiscount) {
           this.discounts.push(d);
         } else {

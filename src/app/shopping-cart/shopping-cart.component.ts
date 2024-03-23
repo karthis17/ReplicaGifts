@@ -25,17 +25,20 @@ export class ShoppingCartComponent {
 
   }
 
-  get() {
+  get(isDelet: boolean = false) {
     this.cart.getCart().subscribe((cart: any) => {
       console.log(cart);
       this.cartList = cart;
+      if (isDelet) {
+        this.total = 0
+      }
       this.cartList.map((cart) => {
         this.total = this.total + cart.userWant.totalAmount;
       })
     });
   }
   remove(id: any) {
-    this.cart.remove(id).subscribe((wish: any) => { console.log(wish); this.get() });
+    this.cart.remove(id).subscribe((wish: any) => { console.log(wish); this.get(true) });
   }
 
 

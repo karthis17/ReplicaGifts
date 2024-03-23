@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { UserAuthService } from './service/user-auth.service';
+import { HeaderComponent } from './partials/header/header.component';
+import { FooterComponent } from './partials/footer/footer.component';
+import { HeaderAllComponent } from './partials/header-all/header-all.component';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet],
+  imports: [CommonModule, RouterOutlet, HeaderAllComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -14,42 +18,13 @@ export class AppComponent {
   title = 'ReplicaGifts';
 
 
-  constructor(private user: UserAuthService, private router: Router) { }
+  isRootRoute: boolean = false;
 
-  isAuth: boolean = false;
-
-  ngOnInit() {
-    this.user.isAuthenticated();
-
-    this.user.isAuthenticatedValue.subscribe(value => {
-      this.isAuth = value;
-    })
-
-  }
-
-  navToLogin() {
-    this.router.navigate(['/login']);
-  }
-
-  navToProfile() {
-    this.router.navigate(['/profile']);
-
-  }
-
-  navCart() {
-    this.router.navigate(['/cart']);
-  }
-
-  navWish() {
-    this.router.navigate(['/wish']);
-  }
-
-  nav() {
-    this.router.navigate([''])
-  }
-
-
-  navShop() {
-    this.router.navigate(['/shop']);
+  constructor(private router: Router) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.isRootRoute = (event.url === '/');
+      }
+    });
   }
 }

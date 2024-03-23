@@ -6,7 +6,7 @@ export class Product {
     discount!: number;
     userImage!: boolean;
     image!: string;
-    category!: string;
+    category!: any;
     additionalInfo!: [{
         title: '',
         description: ''

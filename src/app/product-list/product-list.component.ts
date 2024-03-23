@@ -5,11 +5,12 @@ import { Router, RouterLink } from '@angular/router';
 import { ProductService } from '../service/product.service';
 import { WishService } from '../service/wish.service';
 import { StarRatingComponent } from '../star-rating/star-rating.component';
+import { HeaderComponent } from '../partials/header/header.component';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, RouterLink, StarRatingComponent],
+  imports: [CommonModule, RouterLink, StarRatingComponent, HeaderComponent],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.css'
 })

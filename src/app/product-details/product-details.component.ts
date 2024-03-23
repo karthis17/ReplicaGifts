@@ -1,6 +1,6 @@
 import { Component, SimpleChanges } from '@angular/core';
 import { ProductService } from '../service/product.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Product } from '../model/product.model';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -8,17 +8,19 @@ import { CartService } from '../service/cart.service';
 import { Subject, takeUntil } from 'rxjs';
 import { StarRatingComponent } from '../star-rating/star-rating.component';
 import { GiftsService } from '../service/gifts.service';
+import { CategoryService } from '../service/category.service';
+import { WishService } from '../service/wish.service';
 
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [CommonModule, FormsModule, StarRatingComponent, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, StarRatingComponent, ReactiveFormsModule, RouterLink],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css'
 })
 export class ProductDetailsComponent {
 
-  constructor(public productService: ProductService, private route: ActivatedRoute, private cart: CartService, private router: Router, private giftservice: GiftsService) { }
+  constructor(public productService: ProductService, private route: ActivatedRoute, private cart: CartService, private router: Router, private giftservice: GiftsService, private category: CategoryService, private wish: WishService) { }
   private unsubscribe$: Subject<void> = new Subject<void>();
   productId: any;
 
@@ -30,6 +32,7 @@ export class ProductDetailsComponent {
   reviews!: any;
   comment = new FormControl('', Validators.required)
 
+  relatedProduct: any[] = []
 
 
   getrating(rating: number) {
@@ -94,6 +97,10 @@ export class ProductDetailsComponent {
             this.gifts = items.map((item: any) => { item['selected_quantity'] = 1; return item });
             console.log(this.gifts)
           });
+
+          this.category.getcategoryById(this.data.category._id).subscribe((category: any) => {
+            this.relatedProduct = category;
+          })
           console.log(this.data);
         });
       }
@@ -142,6 +149,13 @@ export class ProductDetailsComponent {
         this.router.navigateByUrl(`/buy-now/${dat._id}`);
       });
     }
+  }
+
+
+  addWish(id: any) {
+
+    this.wish.addWish(id).subscribe((wish: any) => { console.log(wish) });
+
   }
 
 }

@@ -290,9 +290,13 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  closeBtn.addEventListener('click', function () {
-    modal.style.display = 'none';
-  });
+  try {
+    closeBtn.addEventListener('click', function () {
+      modal.style.display = 'none';
+    });
+  } catch (e) {
+    console.log(e);
+  }
 
   window.addEventListener('click', function (event) {
     if (event.target === modal) {

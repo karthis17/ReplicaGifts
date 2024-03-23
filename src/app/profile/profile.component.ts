@@ -20,6 +20,12 @@ export class ProfileComponent {
 
   edit: boolean = false;
 
+  display: any = "dashboard";
+
+  changeDisplay(name: any) {
+    this.display = name;
+  }
+
   orders: any[] = [];
   address: any[] = [];
 
@@ -70,5 +76,12 @@ export class ProfileComponent {
     this.router.navigate(['/']);
 
   }
+
+  home() {
+    this.router.navigate(['/']);
+  }
+
+
+
 
 }
