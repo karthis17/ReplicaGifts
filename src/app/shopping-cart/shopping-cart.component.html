@@ -108,6 +108,7 @@
                 type="number"
                 [(ngModel)]="w.userWant.quantity"
                 class="quantity"
+                (input)="updateQt(w._id, w.userWant.quantity)"
               />
             </td>
             <td>

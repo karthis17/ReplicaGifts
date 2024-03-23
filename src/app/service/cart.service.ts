@@ -83,4 +83,12 @@ export class CartService {
     return this.http.delete("http://localhost:3000/api/carts/remove-item/" + id, _options)
   }
 
+  editQuantity(id: any, quantity: any) {
+    const token: string | null = localStorage.getItem('user');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
+
+    return this.http.post("http://localhost:3000/api/carts/edit-quantity/" + id, { quantity }, _options)
+
+  }
+
 }

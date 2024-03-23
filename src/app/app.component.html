@@ -15,6 +15,6 @@
     </div>
   </div>
 </nav> -->
-<app-header-all *ngIf="!isRootRoute"></app-header-all>
+<app-header-all *ngIf="!isRootRoute && !admin"></app-header-all>
 <router-outlet></router-outlet>
 <app-footer></app-footer>

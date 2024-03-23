@@ -1,18 +1,23 @@
 <div class="container">
   <table class="table">
     <thead>
-      <th>_id</th>
-      <th>USER</th>
-      <th>PRODUCT</th>
-      <th>ACTION</th>
+      <th>Si.NO</th>
+      <th>Date</th>
+      <th>Order Id</th>
+      <th>User</th>
+      <th>Amount</th>
+      <th>View</th>
     </thead>
     <tbody>
-      <tr *ngFor="let order of orders">
-        <td>{{ order._id }}</td>
+      <tr *ngFor="let order of orders; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ order.createdAt | date }}</td>
+        <td>{{ order.orderId }}</td>
         <td>{{ order.user.username }}</td>
-        <td>{{ order.product.title }}</td>
+        <td>{{ order.totalAmount }}</td>
+
         <td>
-          <button (click)="nav(order._id)" class="btn btn-link">open</button>
+          <button (click)="nav(order._id)" class="btn1s">View</button>
         </td>
       </tr>
     </tbody>

@@ -59,6 +59,8 @@ export class CategoryService {
     return this.http.post("http://localhost:3000/api/category/printType", formData, _options)
   }
 
+
+
   update(data: any, id: any) {
     const formData = new FormData();
 

@@ -5,11 +5,11 @@ import { ProductService } from '../../service/product.service';
 import { CategoryService } from '../../service/category.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../model/product.model';
-
+import { ProductViewComponent } from '../product-view/product-view.component';
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ProductViewComponent],
   templateUrl: './product.component.html',
   styleUrl: './product.component.css'
 })
@@ -36,7 +36,7 @@ export class ProductComponent {
       height: 1
     }],
 
-    availablePrintType: [],
+    availablePrintType: [""],
     category: ''
   }
 
@@ -54,25 +54,16 @@ export class ProductComponent {
     });
 
 
-    this.route.queryParams.subscribe(params => {
-      this.showUpdate = params['edit'];
-      console.log(params['edit']);
+    this.get()
 
-      if (this.showUpdate) {
-        this.product.getProduct(this.showUpdate).subscribe(product => {
-          console.log(product);
-          this.data = product
-          this.idToUpdate = product._id
-          this.data.availablePrintType = product.availablePrintType.map(p => p._id)
-        })
 
-      } else {
-        this.getAll()
-      }
 
+  }
+
+  get() {
+    this.product.get().subscribe((data: Product[]) => {
+      this.products = data;
     });
-
-
   }
 
   showUpdate: any = false;
@@ -93,9 +84,7 @@ export class ProductComponent {
   }
 
 
-  getAll() {
-    this.product.get().subscribe((data: any) => this.products = data.product)
-  }
+
 
 
 
@@ -111,7 +100,7 @@ export class ProductComponent {
 
   update() {
 
-    this.product.edit(this.data, this.idToUpdate).subscribe(data => { console.log(data) })
+    this.product.edit(this.data, this.idToUpdate).subscribe(data => { console.log(data); this.get() })
 
   }
 
@@ -123,6 +112,20 @@ export class ProductComponent {
 
     console.log(this.data)
     this.product.addProduct(this.data).subscribe(data => console.log(data));
+  }
+
+  edit(data: any) {
+    this.data = data;
+    this.showUpdate = true;
+    this.idToUpdate = data._id;
+  }
+
+
+  deleteProduct(id: any) {
+    this.product.delete(id).subscribe(data => {
+      console.log(data);
+      this.get()
+    });
   }
 
 }

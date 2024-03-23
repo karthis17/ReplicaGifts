@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { NavigationExtras, Router } from '@angular/router';
-
+import { CartService } from '../../service/cart.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -11,26 +11,17 @@ import { NavigationExtras, Router } from '@angular/router';
 })
 export class DashboardComponent {
 
-  constructor(private router: Router) { }
 
+  constructor(private order: CartService, private router: Router) { }
 
-  dashboardOptions = [
-    { link: '/admin/product-view', name: 'Edit Product', icon: 'bi-pencil-square' },
-    { link: '/admin/product-manipulate', name: 'Add Product', icon: 'bi-plus-square' },
-    { link: '/admin/category', name: 'Category', icon: 'bi-plus-square' },
-    { link: '/admin/category?printType=true', name: 'Print Type', icon: 'bi-plus-square' },
-    { link: '/admin/orders', name: 'Orders', icon: 'bi-cart-plus' },
-    { link: '/admin/gifts', name: 'Gifts', icon: 'bi-cart-plus' },
-    { link: '/admin/purchased-user', name: 'Purchased User', icon: 'bi-person-check-fill' },
-    { link: '/admin/product-view?outOfStock=true', name: 'Out Of Stack Product', icon: 'bi-cart-dash' },
-    { link: '/admin/purchased-user?returned=true', name: 'Returned Orders', icon: 'bi-arrow-return-left' },
-  ]
+  orders: any[] = [];
 
-  nav(link: string) {
-
-    this.router.navigateByUrl(link);
+  ngOnInit() {
+    this.order.getAllFrames().subscribe(frames => { this.orders = frames });
   }
 
-
+  nav(id: any) {
+    this.router.navigateByUrl(`/admin/order-view/${id}`);
+  }
 
 }

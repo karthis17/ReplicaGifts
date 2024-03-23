@@ -18,6 +18,8 @@ export class ShoppingCartComponent {
 
   total: any = 0;
 
+
+
   ngOnInit() {
     this.total = 0;
     this.get();
@@ -49,6 +51,10 @@ export class ShoppingCartComponent {
 
   checkout() {
     this.router.navigate(['/check-out'])
+  }
+
+  updateQt(id: any, q: any) {
+    this.cart.editQuantity(id, q).subscribe((wish: any) => { console.log(wish); this.get(true) });
   }
 
 }
